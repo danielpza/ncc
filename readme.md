@@ -5,6 +5,10 @@
 Simple CLI for compiling a Node.js module into a single file,
 together with all its dependencies, gcc-style.
 
+## NOTICE
+
+This is a fork of the original @vercel/ncc to use esbuild for transpiling files instead of typescript
+
 ## Motivation
 
 - Publish minimal packages to npm
