@@ -104,11 +104,11 @@ function ncc(
     console.log(`ncc: Compiling file ${filename} into ${esm ? "ESM" : "CJS"}`);
   }
 
-  if (target && !target.startsWith("es")) {
-    throw new Error(
-      `Invalid "target" value provided ${target}, value must be es version e.g. es2015`
-    );
-  }
+  // if (target && !target.startsWith("es")) {
+  //   throw new Error(
+  //     `Invalid "target" value provided ${target}, value must be es version e.g. es2015`
+  //   );
+  // }
 
   const resolvedEntry = resolve.sync(entry);
   process.env.__NCC_OPTS = JSON.stringify({
@@ -433,27 +433,14 @@ function ncc(
                 debugLog,
               },
             },
-          ],
-        },
-        {
-          test: /\.tsx?$/,
-          use: [
             {
               loader: eval('__dirname + "/loaders/uncacheable.js"'),
             },
             {
-              loader: eval('__dirname + "/loaders/ts-loader.js"'),
+              loader: "esbuild-loader",
               options: {
-                transpileOnly,
-                compiler: eval('__dirname + "/typescript.js"'),
-                compilerOptions: {
-                  module: "esnext",
-                  target: "esnext",
-                  ...fullTsconfig.compilerOptions,
-                  allowSyntheticDefaultImports: true,
-                  noEmit: false,
-                  outDir: "//",
-                },
+                target,
+                platform: "node",
               },
             },
           ],
